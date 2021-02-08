@@ -20,7 +20,7 @@ $(document).ready(function() {
 
 //TIME PIECE: Where all the clocky-like things happen.
 
- $("#currentDay").text(moment().format("dddd, MMMM Do"));
+ $("#whatDay").text(moment().format("dddd, MMMM Do"));
 
 
 var interval = setInterval(timeCheck, 15000);
