@@ -1,17 +1,13 @@
 //INPUT AND OUTPUT
-
+//THE FOLLOWING SERVE AT WAITING FOR ENTRIES TO BE PUT INTO LOCAL STORAGE.
 $(document).ready(function() {
-    // listen for save button clicks
     $(".saveBtn").on("click", function() {
       // get nearby values
       var value = $(this).siblings(".description").val();
       var time = $(this).parent().attr("id");
-  
-      // save in localStorage
       localStorage.setItem(time, value);
     });
   
- // load any saved data from localStorage
     $("#t-900 .description").val(localStorage.getItem("t-900"));
     $("#t-1000 .description").val(localStorage.getItem("t-1000"));
     $("#t-1100 .description").val(localStorage.getItem("t-1100"));
@@ -22,27 +18,25 @@ $(document).ready(function() {
     $("#t-1600 .description").val(localStorage.getItem("t-1600"));
     $("#t-1700 .description").val(localStorage.getItem("t-1700"));
 
-//TIME PIECE
+//TIME PIECE: Where all the clocky-like things happen.
 
- // Show Time.
  $("#currentDay").text(moment().format("dddd, MMMM Do"));
 
-// set up interval to check if current time needs to be updated
-var interval = setInterval(hourUpdater, 15000);
 
-function hourUpdater() {
-    // get current number of hours
-    var currentHour = moment().hours();
+var interval = setInterval(timeCheck, 15000);
 
-    // loop over time blocks
+function timeCheck() {
+
+    var whatTime = moment().hours();
+
     $(".time-block").each(function() {
-      var blockHour = parseInt($(this).attr("id").split("-")[1]);
+      var timeslot = parseInt($(this).attr("id").split("-")[1]);
 
-      // check if we've moved past this time
-      if (blockHour < currentHour) {
+
+      if (timeslot < whatTime) {
         $(this).addClass("past");
       } 
-      else if (blockHour === currentHour) {
+      else if (timeslot === whatTime) {
         $(this).removeClass("past");
         $(this).addClass("present");
       } 
@@ -54,6 +48,6 @@ function hourUpdater() {
     });
   }
 
-  hourUpdater();
+  timeCheck();
   });
 
